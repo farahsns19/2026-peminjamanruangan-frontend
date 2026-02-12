@@ -1,11 +1,14 @@
 import PeminjamanList from "./pages/PeminjamanList";
+import TambahPeminjaman from "./pages/TambahPeminjaman";
 
 function App() {
   return (
-    <div style={{ padding: "40px" }}>
+    <div>
       <h1>Sistem Peminjaman Ruangan Kampus</h1>
 
-      <h2>Daftar Peminjaman Ruangan</h2>
+      <TambahPeminjaman />
+
+      <hr />
 
       <PeminjamanList />
     </div>
