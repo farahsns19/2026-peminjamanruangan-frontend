@@ -55,7 +55,8 @@ export default function PeminjamanList() {
                         <th>Jam</th>
                         <th>Keperluan</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th>Detail</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
 
@@ -78,6 +79,11 @@ export default function PeminjamanList() {
                             <td>
                                 <a href={`/detail/${item.id}`}>Detail</a>
                             </td>
+                            {/* Kolom khusus Edit */}
+                            <td>
+                                <a href={`/edit/${item.id}`}>Edit</a>
+                            </td>
+
                         </tr>
                     ))}
                 </tbody>
