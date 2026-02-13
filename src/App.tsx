@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import PeminjamanList from "./pages/PeminjamanList";
 import TambahPeminjaman from "./pages/TambahPeminjaman";
 import DetailPeminjaman from "./pages/DetailPeminjaman";
+import EditPeminjaman from "./pages/EditPeminjaman";
+
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
 
         {/* HALAMAN DETAIL */}
         <Route path="/detail/:id" element={<DetailPeminjaman />} />
+        {/* HALAMAN EDIT */}
+        <Route path="/edit/:id" element={<EditPeminjaman />} />
       </Routes>
     </div>
   );
