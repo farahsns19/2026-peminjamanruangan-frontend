@@ -55,8 +55,10 @@ export default function PeminjamanList() {
                         <th>Jam</th>
                         <th>Keperluan</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
+
 
                 <tbody>
                     {data.map((item) => (
@@ -71,6 +73,11 @@ export default function PeminjamanList() {
                             </td>
                             <td>{item.keperluan}</td>
                             <td>{item.status}</td>
+
+                            {/* Kolom khusus Detail */}
+                            <td>
+                                <a href={`/detail/${item.id}`}>Detail</a>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

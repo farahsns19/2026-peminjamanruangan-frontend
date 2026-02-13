@@ -1,16 +1,30 @@
+import { Routes, Route } from "react-router-dom";
+
 import PeminjamanList from "./pages/PeminjamanList";
 import TambahPeminjaman from "./pages/TambahPeminjaman";
+import DetailPeminjaman from "./pages/DetailPeminjaman";
 
 function App() {
   return (
     <div>
       <h1>Sistem Peminjaman Ruangan Kampus</h1>
 
-      <TambahPeminjaman />
+      <Routes>
+        {/* HALAMAN UTAMA */}
+        <Route
+          path="/"
+          element={
+            <>
+              <TambahPeminjaman />
+              <hr />
+              <PeminjamanList />
+            </>
+          }
+        />
 
-      <hr />
-
-      <PeminjamanList />
+        {/* HALAMAN DETAIL */}
+        <Route path="/detail/:id" element={<DetailPeminjaman />} />
+      </Routes>
     </div>
   );
 }
