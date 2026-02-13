@@ -2,13 +2,13 @@
 import { useState } from "react"; // simpan data sementara 
 
 export default function TambahPeminjaman() { // componen
-    const [namaPeminjam, setNamaPeminjam] = useState(""); // state untuk input form
-    const [nrp, setNrp] = useState("");
-    const [ruangan, setRuangan] = useState("");
-    const [keperluan, setKeperluan] = useState("");
-    const [jamMulai, setJamMulai] = useState("");
-    const [jamSelesai, setJamSelesai] = useState("");
-    const [tanggal, setTanggal] = useState("");
+    const [namaPeminjam, setNamaPeminjam] = useState(""); // state untuk input form (nama)
+    const [nrp, setNrp] = useState(""); // (form NRP)
+    const [ruangan, setRuangan] = useState(""); // (form ruangan yang dituju)
+    const [keperluan, setKeperluan] = useState(""); // (form keperluan peminjman)
+    const [jamMulai, setJamMulai] = useState(""); // (form pengisian jam mulai)
+    const [jamSelesai, setJamSelesai] = useState(""); // (form pengisian selesai)
+    const [tanggal, setTanggal] = useState(""); // (form pengisian tanggal pinjam ruangan)
 
 
     async function handleSubmit(e: React.FormEvent) {
