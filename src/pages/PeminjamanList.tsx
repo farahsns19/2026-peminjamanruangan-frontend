@@ -37,6 +37,26 @@ export default function PeminjamanList() {
     if (data.length === 0) {
         return <p>Belum ada data peminjaman.</p>;
     }
+    {/* Membuat fungsi handleDelete */ }
+    async function handleDelete(id: number) {
+        const yakin = window.confirm("Yakin mau menghapus data ini?");
+
+        if (!yakin) return;
+
+        const response = await fetch(
+            `http://localhost:5133/api/PeminjamanRuangan/${id}`,
+            {
+                method: "DELETE",
+            }
+        );
+
+        if (response.ok) {
+            alert("Data berhasil dihapus!");
+            window.location.reload();
+        } else {
+            alert("Gagal menghapus data.");
+        }
+    }
 
     return (
         <div>
@@ -57,6 +77,7 @@ export default function PeminjamanList() {
                         <th>Status</th>
                         <th>Detail</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
 
@@ -73,6 +94,7 @@ export default function PeminjamanList() {
                                 {item.jamMulai} - {item.jamSelesai}
                             </td>
                             <td>{item.keperluan}</td>
+
                             <td>{item.status}</td>
 
                             {/* Kolom khusus Detail */}
@@ -83,6 +105,13 @@ export default function PeminjamanList() {
                             <td>
                                 <a href={`/edit/${item.id}`}>Edit</a>
                             </td>
+                            {/* Kolom khusus Hapus */}
+                            <td>
+                                <button onClick={() => handleDelete(item.id)}>
+                                    Hapus
+                                </button>
+                            </td>
+
 
                         </tr>
                     ))}
