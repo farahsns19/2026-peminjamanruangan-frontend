@@ -15,6 +15,8 @@ type Peminjaman = {
 export default function PeminjamanList() {
     const [data, setData] = useState<Peminjaman[]>([]);
     const [loading, setLoading] = useState(true);
+    const [filterStatus, setFilterStatus] = useState("Semua");
+
 
     useEffect(() => {
         fetch("http://localhost:5133/api/PeminjamanRuangan")
@@ -91,6 +93,20 @@ export default function PeminjamanList() {
 
     return (
         <div>
+            <h3>Filter Status</h3>
+
+            <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+            >
+                <option value="Semua">Semua</option>
+                <option value="Menunggu">Menunggu</option>
+                <option value="Disetujui">Disetujui</option>
+                <option value="Ditolak">Ditolak</option>
+            </select>
+            <h2>Riwayat & Daftar Peminjaman</h2>
+            <p>Menampilkan peminjaman berdasarkan status.</p>
+
             <table
                 border={1}
                 cellPadding={10}
@@ -113,50 +129,56 @@ export default function PeminjamanList() {
                 </thead>
 
                 <tbody>
-                    {data.map((item) => (
-                        <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.namaPeminjam}</td>
-                            <td>{item.nrp}</td>
-                            <td>{item.ruangan}</td>
-                            <td>{item.tanggal}</td>
-                            <td>
-                                {item.jamMulai} - {item.jamSelesai}
-                            </td>
-                            <td>{item.keperluan}</td>
+                    {/* Filter Data Sebelum Ditampilkan */}
+                    {data
+                        .filter((item) =>
+                            filterStatus === "Semua" ? true : item.status === filterStatus
+                        )
+                        .map((item) => (
 
-                            {/* Mengubah status jadi dropdown */}
-                            <td>
-                                <select
-                                    value={item.status}
-                                    onChange={(e) =>
-                                        handleUpdateStatus(item, e.target.value)
-                                    }
-                                >
-                                    <option value="Menunggu">Menunggu</option>
-                                    <option value="Disetujui">Disetujui</option>
-                                    <option value="Ditolak">Ditolak</option>
-                                </select>
-                            </td>
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.namaPeminjam}</td>
+                                <td>{item.nrp}</td>
+                                <td>{item.ruangan}</td>
+                                <td>{item.tanggal}</td>
+                                <td>
+                                    {item.jamMulai} - {item.jamSelesai}
+                                </td>
+                                <td>{item.keperluan}</td>
 
-                            {/* Kolom khusus Detail */}
-                            <td>
-                                <a href={`/detail/${item.id}`}>Detail</a>
-                            </td>
+                                {/* Mengubah status jadi dropdown */}
+                                <td>
+                                    <select
+                                        value={item.status}
+                                        onChange={(e) =>
+                                            handleUpdateStatus(item, e.target.value)
+                                        }
+                                    >
+                                        <option value="Menunggu">Menunggu</option>
+                                        <option value="Disetujui">Disetujui</option>
+                                        <option value="Ditolak">Ditolak</option>
+                                    </select>
+                                </td>
 
-                            {/* Kolom khusus Edit */}
-                            <td>
-                                <a href={`/edit/${item.id}`}>Edit</a>
-                            </td>
+                                {/* Kolom khusus Detail */}
+                                <td>
+                                    <a href={`/detail/${item.id}`}>Detail</a>
+                                </td>
 
-                            {/* Kolom khusus Hapus */}
-                            <td>
-                                <button onClick={() => handleDelete(item.id)}>
-                                    Hapus
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                                {/* Kolom khusus Edit */}
+                                <td>
+                                    <a href={`/edit/${item.id}`}>Edit</a>
+                                </td>
+
+                                {/* Kolom khusus Hapus */}
+                                <td>
+                                    <button onClick={() => handleDelete(item.id)}>
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>
