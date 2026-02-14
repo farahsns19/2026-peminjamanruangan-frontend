@@ -1,34 +1,36 @@
+import Navbar from "./components/Navbar";
+
 import { Routes, Route } from "react-router-dom";
 
 import PeminjamanList from "./pages/PeminjamanList";
 import TambahPeminjaman from "./pages/TambahPeminjaman";
 import DetailPeminjaman from "./pages/DetailPeminjaman";
 import EditPeminjaman from "./pages/EditPeminjaman";
-
+import RiwayatPeminjaman from "./pages/RiwayatPeminjaman";
 
 function App() {
   return (
     <div>
-      <h1>Sistem Peminjaman Ruangan Kampus</h1>
+      <Navbar />
 
-      <Routes>
-        {/* HALAMAN UTAMA */}
-        <Route
-          path="/"
-          element={
-            <>
-              <TambahPeminjaman />
-              <hr />
-              <PeminjamanList />
-            </>
-          }
-        />
+      <div style={{ padding: "30px" }}>
+        <Routes>
+          {/* Home */}
+          <Route path="/" element={<PeminjamanList />} />
 
-        {/* HALAMAN DETAIL */}
-        <Route path="/detail/:id" element={<DetailPeminjaman />} />
-        {/* HALAMAN EDIT */}
-        <Route path="/edit/:id" element={<EditPeminjaman />} />
-      </Routes>
+          {/* Tambah */}
+          <Route path="/tambah" element={<TambahPeminjaman />} />
+
+          {/* Riwayat */}
+          <Route path="/riwayat" element={<RiwayatPeminjaman />} />
+
+          {/* Detail */}
+          <Route path="/detail/:id" element={<DetailPeminjaman />} />
+
+          {/* Edit */}
+          <Route path="/edit/:id" element={<EditPeminjaman />} />
+        </Routes>
+      </div>
     </div>
   );
 }

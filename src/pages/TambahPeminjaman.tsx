@@ -1,15 +1,16 @@
-// Halaman form untuk Tambah Peminjaman Ruangan
-import { useState } from "react"; // simpan data sementara 
+import { useState } from "react";
 
-export default function TambahPeminjaman() { // componen
-    const [namaPeminjam, setNamaPeminjam] = useState(""); // state untuk input form (nama)
-    const [nrp, setNrp] = useState(""); // (form NRP)
-    const [ruangan, setRuangan] = useState(""); // (form ruangan yang dituju)
-    const [keperluan, setKeperluan] = useState(""); // (form keperluan peminjman)
-    const [jamMulai, setJamMulai] = useState(""); // (form pengisian jam mulai)
-    const [jamSelesai, setJamSelesai] = useState(""); // (form pengisian selesai)
-    const [tanggal, setTanggal] = useState(""); // (form pengisian tanggal pinjam ruangan)
+export default function TambahPeminjaman() {
+    const [namaPeminjam, setNamaPeminjam] = useState("");
+    const [nrp, setNrp] = useState("");
+    const [ruangan, setRuangan] = useState("");
+    const [keperluan, setKeperluan] = useState("");
+    const [jamMulai, setJamMulai] = useState("");
+    const [jamSelesai, setJamSelesai] = useState("");
+    const [tanggal, setTanggal] = useState("");
 
+    // pesan notifikasi
+    const [pesan, setPesan] = useState("");
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -37,71 +38,181 @@ export default function TambahPeminjaman() { // componen
         );
 
         if (response.ok) {
-            alert("Peminjaman berhasil ditambahkan!");
-            window.location.reload(); // otomatis refresh
+            setPesan("Peminjaman berhasil diajukan!");
+
+            // kosongkan form setelah submit
+            setNamaPeminjam("");
+            setNrp("");
+            setRuangan("");
+            setTanggal("");
+            setJamMulai("");
+            setJamSelesai("");
+            setKeperluan("");
         } else {
-            alert("Gagal menambahkan data.");
+            setPesan("❌ Gagal menambahkan data.");
         }
     }
 
     return (
-        <div style={{ marginBottom: "30px" }}>
-            <h2>Tambah Peminjaman Ruangan</h2>
+        <div style={{ maxWidth: "700px", margin: "30px auto" }}>
+            {/* Judul */}
+            <h2
+                style={{
+                    textAlign: "center",
+                    color: "#14532d",
+                    marginBottom: "20px",
+                }}
+            >
+                Form Pengajuan Peminjaman Ruangan
+            </h2>
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        placeholder="Nama Peminjam"
-                        value={namaPeminjam}
-                        onChange={(e) => setNamaPeminjam(e.target.value)}
-                    />
+            {/* Notifikasi */}
+            {pesan && (
+                <div
+                    style={{
+                        backgroundColor: "#f0fdf4",
+                        border: "1px solid #86efac",
+                        padding: "12px",
+                        borderRadius: "10px",
+                        marginBottom: "20px",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                    }}
+                >
+                    {pesan}
                 </div>
+            )}
 
-                <div>
-                    <input
-                        placeholder="NRP"
-                        value={nrp}
-                        onChange={(e) => setNrp(e.target.value)}
-                    />
-                </div>
+            {/* Card Form */}
+            <div
+                style={{
+                    background: "white",
+                    padding: "25px",
+                    borderRadius: "16px",
+                    boxShadow: "0 6px 14px rgba(0,0,0,0.12)",
+                }}
+            >
+                <form
+                    onSubmit={handleSubmit}
+                    style={{ display: "grid", gap: "15px" }}
+                >
+                    {/* Nama */}
+                    <InputRow label="Nama" value={namaPeminjam} setValue={setNamaPeminjam} />
 
-                <div>
-                    <input
-                        placeholder="Ruangan"
-                        value={ruangan}
-                        onChange={(e) => setRuangan(e.target.value)}
-                    />
-                </div>
+                    {/* NRP */}
+                    <InputRow label="NRP" value={nrp} setValue={setNrp} />
 
-                <input
-                    type="date"
-                    value={tanggal}
-                    onChange={(e) => setTanggal(e.target.value)}
-                />
+                    {/* Ruangan */}
+                    <InputRow label="Ruangan" value={ruangan} setValue={setRuangan} />
 
-                <input
-                    type="time"
-                    value={jamMulai}
-                    onChange={(e) => setJamMulai(e.target.value)}
-                />
+                    {/* Tanggal */}
+                    <div style={rowStyle}>
+                        <label style={labelStyle}>Tanggal</label>
+                        <input
+                            type="date"
+                            value={tanggal}
+                            onChange={(e) => setTanggal(e.target.value)}
+                            style={inputStyle}
+                            required
+                        />
+                    </div>
 
-                <input
-                    type="time"
-                    value={jamSelesai}
-                    onChange={(e) => setJamSelesai(e.target.value)}
-                />
+                    {/* Jam */}
+                    <div style={rowStyle}>
+                        <label style={labelStyle}>Jam</label>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                            <input
+                                type="time"
+                                value={jamMulai}
+                                onChange={(e) => setJamMulai(e.target.value)}
+                                style={inputStyle}
+                                required
+                            />
+                            <input
+                                type="time"
+                                value={jamSelesai}
+                                onChange={(e) => setJamSelesai(e.target.value)}
+                                style={inputStyle}
+                                required
+                            />
+                        </div>
+                    </div>
 
+                    {/* Keperluan */}
+                    <div style={rowStyle}>
+                        <label style={labelStyle}>Keperluan</label>
+                        <textarea
+                            value={keperluan}
+                            onChange={(e) => setKeperluan(e.target.value)}
+                            placeholder="Keperluan peminjaman"
+                            style={{
+                                ...inputStyle,
+                                minHeight: "90px",
+                            }}
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <input
-                        placeholder="Keperluan"
-                        value={keperluan}
-                        onChange={(e) => setKeperluan(e.target.value)}
-                    />
-                </div>
-
-                <button type="submit">Simpan</button>
-            </form>
+                    {/* Button */}
+                    <button
+                        type="submit"
+                        style={{
+                            backgroundColor: "#14532d",
+                            color: "white",
+                            padding: "12px",
+                            border: "none",
+                            borderRadius: "10px",
+                            fontSize: "16px",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                        }}
+                    >
+                        Ajukan Peminjaman
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
+
+function InputRow({
+    label,
+    value,
+    setValue,
+}: {
+    label: string;
+    value: string;
+    setValue: (v: string) => void;
+}) {
+    return (
+        <div style={rowStyle}>
+            <label style={labelStyle}>{label}</label>
+            <input
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder={`Masukkan ${label.toLowerCase()}`}
+                style={inputStyle}
+                required
+            />
+        </div>
+    );
+}
+
+const rowStyle = {
+    display: "grid",
+    gridTemplateColumns: "120px 1fr",
+    alignItems: "center",
+    gap: "10px",
+};
+
+const labelStyle = {
+    fontWeight: "bold",
+    color: "#14532d",
+};
+
+const inputStyle = {
+    padding: "10px",
+    borderRadius: "10px",
+    border: "1px solid #ddd",
+    width: "100%",
+};
