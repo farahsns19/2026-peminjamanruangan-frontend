@@ -29,7 +29,7 @@ export default function PeminjamanList() {
                 setLoading(false);
             });
     }, []);
-
+    {/* Kondisi if else data peminjaman */ }
     if (loading) {
         return <p>Loading data peminjaman...</p>;
     }
@@ -37,6 +37,7 @@ export default function PeminjamanList() {
     if (data.length === 0) {
         return <p>Belum ada data peminjaman.</p>;
     }
+
     {/* Membuat fungsi handleDelete */ }
     async function handleDelete(id: number) {
         const yakin = window.confirm("Yakin mau menghapus data ini?");
@@ -55,6 +56,36 @@ export default function PeminjamanList() {
             window.location.reload();
         } else {
             alert("Gagal menghapus data.");
+        }
+    }
+
+    {/* Membuat fungsi handleUpdateStatus */ }
+    async function handleUpdateStatus(item: Peminjaman, statusBaru: string) {
+        const response = await fetch(
+            `http://localhost:5133/api/PeminjamanRuangan/${item.id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    namaPeminjam: item.namaPeminjam,
+                    nrp: item.nrp,
+                    ruangan: item.ruangan,
+                    tanggal: item.tanggal,
+                    jamMulai: item.jamMulai,
+                    jamSelesai: item.jamSelesai,
+                    keperluan: item.keperluan,
+                    status: statusBaru,
+                }),
+            }
+        );
+
+        if (response.ok) {
+            alert("Status berhasil diperbarui!");
+            window.location.reload();
+        } else {
+            alert("Gagal update status.");
         }
     }
 
@@ -81,7 +112,6 @@ export default function PeminjamanList() {
                     </tr>
                 </thead>
 
-
                 <tbody>
                     {data.map((item) => (
                         <tr key={item.id}>
@@ -95,24 +125,36 @@ export default function PeminjamanList() {
                             </td>
                             <td>{item.keperluan}</td>
 
-                            <td>{item.status}</td>
+                            {/* Mengubah status jadi dropdown */}
+                            <td>
+                                <select
+                                    value={item.status}
+                                    onChange={(e) =>
+                                        handleUpdateStatus(item, e.target.value)
+                                    }
+                                >
+                                    <option value="Menunggu">Menunggu</option>
+                                    <option value="Disetujui">Disetujui</option>
+                                    <option value="Ditolak">Ditolak</option>
+                                </select>
+                            </td>
 
                             {/* Kolom khusus Detail */}
                             <td>
                                 <a href={`/detail/${item.id}`}>Detail</a>
                             </td>
+
                             {/* Kolom khusus Edit */}
                             <td>
                                 <a href={`/edit/${item.id}`}>Edit</a>
                             </td>
+
                             {/* Kolom khusus Hapus */}
                             <td>
                                 <button onClick={() => handleDelete(item.id)}>
                                     Hapus
                                 </button>
                             </td>
-
-
                         </tr>
                     ))}
                 </tbody>
