@@ -10,7 +10,6 @@ body {
   padding: 30px;
 }
 
-
 h1,
 h2 {
   color: #14532d;
@@ -52,6 +51,20 @@ td,
 th {
   border: 1px solid #ddd;
   padding: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+
+  background-image: url("/bg-kampus1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  font-family: Arial, sans-serif;
 }
 
 

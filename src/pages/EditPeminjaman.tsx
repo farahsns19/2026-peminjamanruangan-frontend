@@ -173,7 +173,6 @@ export default function EditPeminjaman() {
                         <option value="Disetujui">Disetujui</option>
                         <option value="Ditolak">Ditolak</option>
                     </select>
-=
                     <div style={{ textAlign: "center", marginTop: "20px" }}>
                         <button
                             type="submit"

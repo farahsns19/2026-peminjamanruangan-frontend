@@ -10,10 +10,30 @@ import RiwayatPeminjaman from "./pages/RiwayatPeminjaman";
 
 function App() {
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: "1100px",
+        margin: "30px auto",
+        backgroundColor: "rgba(255,255,255,0.63)",
+        borderRadius: "18px",
+        padding: "30px",
+        boxShadow: "0 6px 14px rgba(0,0,0,0.25)",
+      }}
+    >
+      {/* ✅ Navbar tetap di atas */}
       <Navbar />
 
-      <div style={{ padding: "30px" }}>
+      {/* ✅ Konten halaman dibungkus card putih */}
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "30px auto",
+          backgroundColor: "rgba(255,255,255,0.92)",
+          borderRadius: "18px",
+          padding: "30px",
+          boxShadow: "0 6px 14px rgba(0,0,0,0.25)",
+        }}
+      >
         <Routes>
           {/* Home */}
           <Route path="/" element={<PeminjamanList />} />
